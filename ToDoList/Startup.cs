@@ -31,7 +31,8 @@ namespace ToDoList
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddTransient<INotifierMediatorService, NotifierMediatorService>();
+            services.AddDbContext<PlannerContext>(context => context.UseSqlServer(Configuration.GetConnectionString("DefalutConnection")));
+            services.Register();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
