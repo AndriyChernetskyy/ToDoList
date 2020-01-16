@@ -6,8 +6,7 @@ namespace ToDoList.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-
-        public User User;
+        public User User { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DatePlanedFor { get; set; }
         public string PlanDescription { get; set; }

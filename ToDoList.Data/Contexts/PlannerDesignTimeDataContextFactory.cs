@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using ToDoList.Models;
-using System.IO;
+using System;
 
 namespace ToDoList.Contexts
 {
@@ -13,7 +13,7 @@ namespace ToDoList.Contexts
         public PlannerContext CreateDbContext(string[] args)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(Environment.CurrentDirectory)
                 .AddJsonFile("appsettings.json")
                 .Build();
 
