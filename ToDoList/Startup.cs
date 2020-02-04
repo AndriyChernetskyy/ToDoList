@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using ToDoList.Commands.Plan.Create;
+using ToDoList.Commands.Plan.Delete;
+using ToDoList.Commands.Plan.Update;
 using ToDoList.Models;
+using ToDoList.Queries.Plan.Get;
 
 namespace ToDoList
 {
@@ -31,15 +28,14 @@ namespace ToDoList
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.AllowAnyMethod();
-                builder.AllowAnyOrigin();
-                builder.AllowAnyHeader();
-
-           }));
+            services.AddCors();
             services.AddDbContext<PlannerContext>(context => context.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.Register();
+
+            services.AddMediatR(typeof(GetPlansQueryHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(CreatePlanCommandHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(DeletePlanCommandHandler).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(UpdatePlanCommandHandler).GetTypeInfo().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +51,8 @@ namespace ToDoList
                 app.UseHsts();
             }
 
-            app.UseCors("MyPolicy");
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:52427"));
 
             app.UseHttpsRedirection();
             app.UseMvc();

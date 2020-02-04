@@ -2,9 +2,9 @@
 using System;
 using ToDoList.Models;
 
-namespace ToDoList.MediatR.Commands
+namespace ToDoList.Commands.Plan.Update
 {
-    public class UpdatePlan : IRequest<DailyPlan>
+    public class UpdatePlanCommand : IRequest
     {
         public int Id;
         public DateTime DatePlanedFor { get; set; }
