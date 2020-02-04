@@ -2,9 +2,9 @@
 using System;
 using ToDoList.Models;
 
-namespace ToDoList.MediatR.Commands
+namespace ToDoList.Commands.Plan.Create
 {
-    public class CreatePlan : IRequest<DailyPlan>
+    public class CreatePlanCommand : IRequest
     {
         public DateTime DatePlanedFor { get; set; }
         public string PlanDescription { get; set; }

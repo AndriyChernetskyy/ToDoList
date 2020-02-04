@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ToDoList.Models;
 
-namespace ToDoList.MediatR.Queries
+namespace ToDoList.Queries.Plan.Get
 {
     public class GetPlansQuery : IRequest<IEnumerable<DailyPlan>>
     {

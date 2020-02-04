@@ -1,18 +1,16 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using ToDoList.MediatR.Commands;
-using ToDoList.MediatR.Queries;
-using ToDoList.Models;
+using ToDoList.Commands.Plan.Create;
+using ToDoList.Commands.Plan.Delete;
+using ToDoList.Commands.Plan.Update;
+using ToDoList.Queries.Plan.Get;
 
 namespace ToDoList.Controllers
 {
     [Route("api/planners")]
     [ApiController]
-    [EnableCors("MyPolicy")]
     public class PlannersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -23,35 +21,35 @@ namespace ToDoList.Controllers
         }
 
         [HttpGet]
-        [Route("get-plans")]
-        public async Task<IEnumerable<DailyPlan>> GetNotes()
+        [Route("")]
+        public async Task<IActionResult> Get()
         {
-            var plans = await _mediator.Send(new GetPlansQuery());
-            
-            return plans;
+            try
+            {
+                return Ok(await _mediator.Send(new GetPlansQuery()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
-        [Route("create-plan")]
-        public async Task<ActionResult<DailyPlan>> Create(CreatePlan request)
+        [Route("")]
+        public async Task<IActionResult> Create(CreatePlanCommand command)
         {
-            var plan = await _mediator.Send(request);
-
-            return plan;
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpPut]
-        [Route("update-plan")]
-        public async Task<ActionResult<DailyPlan>> Update(UpdatePlan request)
+        [Route("")]
+        public async Task<IActionResult> Update(UpdatePlanCommand command)
         {
-            var plan = await _mediator.Send(request);
-            
-            return plan;
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete]
-        [Route("delete-plan")]
-        public async Task<IActionResult> Delete(DeletePlan request)
+        public async Task<IActionResult> Delete(DeletePlanCommand request)
         {
             await _mediator.Send(request);
             

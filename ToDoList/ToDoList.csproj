@@ -22,8 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ToDoList.Commands\ToDoList.Commands.csproj" />
     <ProjectReference Include="..\ToDoList.Data\ToDoList.Data.csproj" />
     <ProjectReference Include="..\ToDoList.Domain\ToDoList.Domain.csproj" />
+    <ProjectReference Include="..\ToDoList.Persistence\ToDoList.Persistence.csproj" />
+    <ProjectReference Include="..\ToDoList.Queries\ToDoList.Queries.csproj" />
   </ItemGroup>
 
 </Project>
